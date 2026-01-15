@@ -1,10 +1,12 @@
 def show_table(trans_map, state_list, symbols, caption):
     print("\n" + caption)
     print("State\t" + "\t".join(symbols))
+
     for st in state_list:
         row = [st]
         for sym in symbols:
-            row.append(",".join(trans_map.get((st, sym), [])))
+            value = trans_map.get((st, sym), [])
+            row.append(",".join(value))
         print("\t".join(row))
 
 
@@ -16,8 +18,12 @@ def convert_nfa_to_dfa(nfa_map, start_node, final_nodes, symbols):
     for current in dfa_states:
         for sym in symbols:
             next_state = []
+
             for sub in current:
-                next_state.extend(nfa_map.get((sub, sym), []))
+                transitions = nfa_map.get((sub, sym), [])
+                for t in transitions:
+                    next_state.append(t)
+
             next_state = sorted(set(next_state))
 
             if next_state:
@@ -39,7 +45,7 @@ symbols = ['0', '1']
 start_node = 'p0'
 final_nodes = ['p2']
 
-# NFA definition (Example: accepts strings ending with "01")
+# NFA definition (accepts strings ending with "01")
 nfa_map = {
     ('p0', '0'): ['p0', 'p1'],
     ('p0', '1'): ['p0'],
@@ -56,9 +62,15 @@ dfa_states, dfa_transitions, dfa_start, dfa_finals = convert_nfa_to_dfa(
     nfa_map, start_node, final_nodes, symbols
 )
 
-dfa_state_names = ["".join(st) for st in dfa_states]
-dfa_trans_str = {("".join(s), sym): ["".join(t)]
-                 for (s, sym), t in dfa_transitions.items()}
+# Convert DFA states to string form
+dfa_state_names = []
+for st in dfa_states:
+    dfa_state_names.append("".join(st))
+
+# Convert DFA transitions to printable form
+dfa_trans_str = {}
+for (s, sym), t in dfa_transitions.items():
+    dfa_trans_str[("".join(s), sym)] = ["".join(t)]
 
 # Print DFA Table
 show_table(dfa_trans_str, dfa_state_names, symbols, "DFA Transition Table")
