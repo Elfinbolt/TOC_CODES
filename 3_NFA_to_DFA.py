@@ -1,13 +1,12 @@
-def show_table(trans_map, state_list, symbols, caption):
-    print("\n" + caption)
-    print("State\t" + "\t".join(symbols))
+def show_table(trans_map, states, symbols, title):
+    print(title)
+    print("State", *symbols, sep="\t")
 
-    for st in state_list:
-        row = [st]
+    for state in states:
+        print(state, end="\t")
         for sym in symbols:
-            value = trans_map.get((st, sym), [])
-            row.append(",".join(value))
-        print("\t".join(row))
+            print(",".join(trans_map.get((state, sym), [])), end="\t")
+        print()
 
 
 def convert_nfa_to_dfa(nfa_map, start_node, final_nodes, symbols):
