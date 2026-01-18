@@ -28,7 +28,7 @@ curr = start
 result += state_output.get(curr, "")
 
 # Process the binary string in reverse
-for bit in reversed(bin_str):
+for bit in bin_str:
     if (curr, bit) in fsm_rules:
         curr = fsm_rules[(curr, bit)]
         result += state_output.get(curr, "")

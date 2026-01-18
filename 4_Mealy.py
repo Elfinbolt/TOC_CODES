@@ -17,7 +17,7 @@ result = ""
 curr = start
 
 # Process the binary string in reverse
-for bit in reversed(bin_str):
+for bit in bin_str:
     if (curr, bit) in fsm_rules:
         nxt_state, op_val = fsm_rules[(curr, bit)]
         result = op_val + result

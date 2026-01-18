@@ -2,11 +2,13 @@
 # Includes terminal-matching transitions like δ(q, a, a) → (q, ε)
 
 # ---------- CFG Definition ----------
-variables = ["S"]
+variables = ["S","A","B"]
 terminals = ["a", "b"]
 start_symbol = "S"
 productions = {
-    "S": ["aSb", "ab"]
+    "S": ["AB", "BA"],
+    "A":["a"],
+    "B":["b"]
 }
 
 transitions = []
