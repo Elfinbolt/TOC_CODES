@@ -25,13 +25,13 @@ result = ""
 curr = start
 
 # Moore machine: output depends only on the current state
-result += state_output.get(curr, "")
+result += state_output[curr]
 
 # Process the binary string in reverse
 for bit in bin_str:
     if (curr, bit) in fsm_rules:
         curr = fsm_rules[(curr, bit)]
-        result += state_output.get(curr, "")
+        result += state_output[curr]
     else:
         print(f"No rule for state {curr} with input {bit}")
         break
